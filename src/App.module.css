@@ -1,0 +1,16 @@
+.navbar{
+    display:flex;
+    flex-direction: row;
+    gap:20px;
+    
+    
+    
+
+   
+}
+.navbarİtem{
+    text-decoration: none;
+    list-style-type: none;
+    
+}
+

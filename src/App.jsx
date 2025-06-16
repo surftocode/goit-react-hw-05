@@ -4,6 +4,7 @@ import { BrowserRouter, useParams } from "react-router-dom";
 import { Routes, Route, NavLink } from "react-router-dom";
 import clsx from "clsx";
 import React from "react";
+import css from "./App.module.css"
 
 import MovieList from "./components/MovieList";
 import HomePage from "./pages/HomePage";
@@ -38,6 +39,10 @@ const App = () => {
 
   return (
     <div>
+      <ul className={css.navbar}>
+        <li className={css.navbarİtem}><NavLink to="./">Home</NavLink></li>
+        <li className={css.navbarİtem}><NavLink>Movies</NavLink></li>
+      </ul>
      
       <MovieList movies={movie} />
       <Routes>

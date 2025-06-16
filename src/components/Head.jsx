@@ -17,10 +17,7 @@ const Head = ({onSearch,onClick}) => {
   };
   return (
     <div>
-      <div className={css.header}>
-        <p>Home</p>
-        <p>Movies</p>
-      </div>
+      
       <form onSubmit={handleSubmit} className={css.formElements}>
         <input
           type="text"
