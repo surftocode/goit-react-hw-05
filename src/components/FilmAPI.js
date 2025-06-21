@@ -11,9 +11,7 @@ export const fetchMovies = async (search) => {
         query: search,
       },
     });
-    return response.data.results.map((movie) => ({
-      title: movie.title,
-    }));
+    return response.data.results;
   } catch (err) {
     console.err("API'den veri alınırken bir hata oluştu.", err);
     return [];

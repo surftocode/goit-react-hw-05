@@ -1,5 +1,6 @@
 import React from "react";
 import css from "./Head.module.css";
+import { Outlet } from "react-router-dom";
 
 const Head = ({onSearch,onClick}) => {
   const handleSubmit=(e)=>{
@@ -30,6 +31,7 @@ const Head = ({onSearch,onClick}) => {
           Find
         </button>
       </form>
+      <Outlet/>
     </div>
   );
 };

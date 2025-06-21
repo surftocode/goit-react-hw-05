@@ -4,7 +4,7 @@ import { BrowserRouter, useParams } from "react-router-dom";
 import { Routes, Route, NavLink } from "react-router-dom";
 import clsx from "clsx";
 import React from "react";
-import css from "./App.module.css"
+import css from "./App.module.css";
 
 import MovieList from "./components/MovieList";
 import HomePage from "./pages/HomePage";
@@ -16,40 +16,42 @@ import { fetchMovies } from "./components/FilmAPI";
 import { useData } from "./DataContext";
 
 const App = () => {
-  const {movie,isLoading}=useData();
-  // const [movie, setMovie] = useState([]);
-  // const [isLoading, setIsLoading] = useState(false);
- 
-  // const handleSearch = async (query) => {
-  //   try {
-  //     const movieResults = await fetchMovies(query);
-  //     setMovie(movieResults);
-  //   } catch (err) {
-  //     console.log("hata mesajı:", err);
-  //   }
-  // };
+  const { movie, isLoading,setMovie } = useData();
+  const handleSearch = async (query) => {
+    try {
+      const movieResults = await fetchMovies(query);
+      setMovie(movieResults);
+    } catch (err) {
+      console.log("hata mesajı:", err);
+    }
+  };
+  if (isLoading) {
+    return <h2>Please Wait..</h2>;
+  }
 
-  // if (isLoading) {
-  //   return <h2>Please Wait..</h2>;
-  // }
-
-  // const warning = () => {
-  //   alert("Please search a movie 🕵");
-  // };
+  const warning = () => {
+    alert("Please search a movie 🕵");
+  };
 
   return (
     <div>
-      <ul className={css.navbar}>
-        <li className={css.navbarİtem}><NavLink to="./">Home</NavLink></li>
-        <li className={css.navbarİtem}><NavLink>Movies</NavLink></li>
-      </ul>
-     
+      <nav>
+        <ul className={css.navbar}>
+          <li className={css.navbarİtem}>
+            <NavLink to="/">Home</NavLink>
+          </li>
+          <li className={css.navbarİtem}>
+            <NavLink to="/movies">Movies</NavLink>
+          </li>
+        </ul>
+      </nav>
+      <Head onSearch={handleSearch} onClick={warning} />
+
       <MovieList movies={movie} />
       <Routes>
-        <Route path="/" element={<HomePage />}></Route>
+        <Route index element={<HomePage />}></Route>
         <Route path="/movieList" element={<MovieList />}></Route>
-        <Route path="/movieDetails" element={<MoviDetailsPage />}></Route>
-        <Route path="/moviePage" element={<MoviesPage />}></Route>
+        <Route path="/movieList/:id" element={<MoviDetailsPage />}></Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </div>
@@ -57,5 +59,3 @@ const App = () => {
 };
 
 export default App;
-
-
