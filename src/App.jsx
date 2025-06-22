@@ -16,7 +16,7 @@ import { fetchMovies } from "./components/FilmAPI";
 import { useData } from "./DataContext";
 
 const App = () => {
-  const { movie, isLoading, setMovie,setChange } = useData();
+  const { movie, isLoading, setMovie, setChange } = useData();
   const handleSearch = async (query) => {
     try {
       const movieResults = await fetchMovies(query);
@@ -32,7 +32,6 @@ const App = () => {
   const warning = () => {
     alert("Please search a movie 🕵");
   };
- 
 
   return (
     <div>
@@ -50,7 +49,7 @@ const App = () => {
 
       <Routes>
         <Route index element={<HomePage />}></Route>
-        <Route path="/movieList" element={<Navigate><MoviesPage /></Navigate>}></Route>
+        <Route path="/movies" element={<MoviesPage />}></Route>
         <Route path="/movieList/:id" element={<MoviDetailsPage />}></Route>
 
         {/* <Route path="/movieList/:id/reviews" element={<MovieReviews/>}></Route> */}
