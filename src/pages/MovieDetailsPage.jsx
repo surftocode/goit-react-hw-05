@@ -8,14 +8,17 @@ const MovieDetailsPage = () => {
   const { movie } = useData();
   console.log(id);
 
-  const selectedMovie = movie.find((m) => m.id == id);
+  const selectedMovie = movie.find((m) => m.id == Number(id));
   console.log(selectedMovie);
+  if(!selectedMovie){
+    return <p>Loading movies...</p>
+  }
 
   return (
     <div>
       <div>
         <div>
-          <img src={`https://image.tmdb.org/t/p/w500${selectedMovie.poster_path}`} />
+          {/* <img src={`https://image.tmdb.org/t/p/w500${selectedMovie.poster_path}`} /> */}
         </div>
         <div>
           <h3>{selectedMovie.title}</h3>

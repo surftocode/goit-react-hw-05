@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, useParams } from "react-router-dom";
-import { Routes, Route, NavLink } from "react-router-dom";
+import { Routes, Route, NavLink, Navigate } from "react-router-dom";
 import clsx from "clsx";
 import React from "react";
 import css from "./App.module.css";
@@ -16,7 +16,7 @@ import { fetchMovies } from "./components/FilmAPI";
 import { useData } from "./DataContext";
 
 const App = () => {
-  const { movie, isLoading,setMovie } = useData();
+  const { movie, isLoading, setMovie,setChange } = useData();
   const handleSearch = async (query) => {
     try {
       const movieResults = await fetchMovies(query);
@@ -32,6 +32,7 @@ const App = () => {
   const warning = () => {
     alert("Please search a movie 🕵");
   };
+ 
 
   return (
     <div>
@@ -45,13 +46,14 @@ const App = () => {
           </li>
         </ul>
       </nav>
-      <Head onSearch={handleSearch} onClick={warning} />
+      {/* <Head onSearch={handleSearch} onClick={warning} onChange={handleChange}/> */}
 
-      <MovieList movies={movie} />
       <Routes>
         <Route index element={<HomePage />}></Route>
-        <Route path="/movieList" element={<MovieList />}></Route>
+        <Route path="/movieList" element={<Navigate><MoviesPage /></Navigate>}></Route>
         <Route path="/movieList/:id" element={<MoviDetailsPage />}></Route>
+
+        {/* <Route path="/movieList/:id/reviews" element={<MovieReviews/>}></Route> */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </div>

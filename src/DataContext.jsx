@@ -4,6 +4,7 @@ const DataProvider = ({ children }) => {
   const [movie, setMovie] = useState([]);
   const [isLoading, setİsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [search,setSearch]=useState("");
   const deger = {
     movie,
     isLoading,
@@ -11,6 +12,8 @@ const DataProvider = ({ children }) => {
     setMovie,
     setİsLoading,
     setError,
+    search,
+    setSearch
   };
   return <DataContext.Provider value={deger}>{children}</DataContext.Provider>;
 };

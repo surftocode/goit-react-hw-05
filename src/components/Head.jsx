@@ -2,36 +2,35 @@ import React from "react";
 import css from "./Head.module.css";
 import { Outlet } from "react-router-dom";
 
-const Head = ({onSearch,onClick}) => {
-  const handleSubmit=(e)=>{
+const Head = ({ onChange, onClick, searchValue }) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const form =e.target;
-    const search=form.elements.searchMovies.value;
-    if(search.trim()===""){
-      onClick();
-      return;
-    }
-    onSearch(search)
-
-    form.reset();
-
+    onClick();
   };
+
+  console.log("onchange", typeof onChange);
+  console.log("onClick", typeof onClick);
+  console.log("searchValue", typeof searchValue);
   return (
     <div>
-      
       <form onSubmit={handleSubmit} className={css.formElements}>
         <input
           type="text"
           name="searchMovies"
-          placeholder="Search movies"
+          placeholder="Search a movie..."
+          value={searchValue}
           autoComplete="off"
           className={css.searchBar}
+          onChange={(e) => {
+            onChange(e.target.value);
+          }}
         />
+        <p>You typed: {searchValue}</p>
         <button type="submit" className={css.searchBtn}>
           Find
         </button>
       </form>
-      <Outlet/>
+      <Outlet />
     </div>
   );
 };
