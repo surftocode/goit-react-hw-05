@@ -1,6 +1,8 @@
 import React from "react";
 import css from "./MovieList.module.css";
 import { Link } from "react-router-dom";
+import MovieDetailsPage from "../pages/MovieDetailsPage";
+
 
 const MovieList = ({ movies }) => {
   if (!Array.isArray(movies)) {
@@ -25,5 +27,8 @@ const MovieList = ({ movies }) => {
     </div>
   );
 };
+
+<MovieDetailsPage/>
+
 
 export default MovieList;

@@ -7,11 +7,11 @@ import MovieList from "../components/MovieList";
 
 const HomePage = () => {
   const APIKey = "0f552bbb3a7946c71382d336324ac39a";
-  const { movie, setMovie, setError, setİsLoading } = useData();
+  const { movie, setMovie, setError, setIsLoading } = useData();
 
   useEffect(() => {
     const trendingMovies = async () => {
-      setİsLoading(true);
+      setIsLoading(true);
       try {
         const {data} = await axios.get(
           "https://api.themoviedb.org/3/trending/movie/day",
@@ -26,7 +26,7 @@ const HomePage = () => {
       } catch (error) {
         setError("Trend filmler yüklenemedi.");
       } finally {
-        setİsLoading(false);
+        setIsLoading(false);
       }
     };
     trendingMovies();

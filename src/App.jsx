@@ -2,19 +2,22 @@ import { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, useParams } from "react-router-dom";
 import { Routes, Route, NavLink, Navigate } from "react-router-dom";
-import clsx from "clsx";
+import { lazy, Suspense } from "react";
+
 import React from "react";
 import css from "./App.module.css";
 
-import MovieList from "./components/MovieList";
-import HomePage from "./pages/HomePage";
-import MoviesPage from "./pages/MoviesPage";
+
 import NotFoundPage from "./pages/NotFoundPage";
-import MoviDetailsPage from "./pages/MovieDetailsPage";
-import Head from "./components/Head";
+
 import { fetchMovies } from "./components/FilmAPI";
 import { useData } from "./DataContext";
 
+const HomePage = lazy(() => import("./pages/HomePage"));
+const MoviesPage = lazy(() => import("./pages/MoviesPage"));
+const MovieDetailsPage = lazy(() => import("./pages/MovieDetailsPage"));
+const MovieCast = lazy(() => import("../components/MovieCast"));
+const MovieReviews = lazy(() => import("../components/MovieReviews"));
 const App = () => {
   const { movie, isLoading, setMovie, setChange } = useData();
   const handleSearch = async (query) => {
@@ -45,14 +48,49 @@ const App = () => {
           </li>
         </ul>
       </nav>
-      {/* <Head onSearch={handleSearch} onClick={warning} onChange={handleChange}/> */}
 
       <Routes>
-        <Route index element={<HomePage />}></Route>
-        <Route path="/movies" element={<MoviesPage />}></Route>
-        <Route path="/movieList/:id" element={<MoviDetailsPage />}></Route>
-
-        {/* <Route path="/movieList/:id/reviews" element={<MovieReviews/>}></Route> */}
+        <Route
+          index
+          element={
+            <Suspense fallback={"Loading.."}>
+              <HomePage />
+            </Suspense>
+          }
+        ></Route>
+        <Route
+          path="/movies"
+          element={
+            <Suspense fallback={"Loading..."}>
+              <MoviesPage />
+            </Suspense>
+          }
+        ></Route>
+        <Route
+          path="/movieList/:id"
+          element={
+            <Suspense fallback={"Loading..."}>
+              <MovieDetailsPage />
+            </Suspense>
+          }
+        >
+          <Route
+            path="cast"
+            element={
+              <Suspense>
+                <MovieCast />
+              </Suspense>
+            }
+          ></Route>
+          <Route
+            path="reviews"
+            element={
+              <Suspense>
+                <MovieReviews />
+              </Suspense>
+            }
+          ></Route>
+        </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </div>

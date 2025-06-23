@@ -1,33 +1,76 @@
 import React from "react";
-import { useContext } from "react";
+import { useContext, useEffect,lazy, Suspense} from "react";
 import { useData } from "../DataContext";
-import { useParams } from "react-router-dom";
+import { useParams, Link, Outlet, useLocation } from "react-router-dom";
+import axios from "axios";
+
+const APIKey = "0f552bbb3a7946c71382d336324ac39a";
+
 
 const MovieDetailsPage = () => {
   const { id } = useParams();
-  const { movie } = useData();
+  const { movie, setMovie, loading, setLoading, error, setError } = useData();
   console.log(id);
 
-  const selectedMovie = movie.find((m) => m.id == Number(id));
-  console.log(selectedMovie);
-  if(!selectedMovie){
-    return <p>Loading movies...</p>
+  // const selectedMovie = movie.find((m) => m.id == Number(id));
+  // console.log(selectedMovie);
+  // if(!selectedMovie){
+  //   return <p>Loading movies...</p>
+  // }
+  useEffect(() => {
+    const fetchMovieDetails = async () => {
+      try {
+        setLoading(true);
+        const res = await axios.get(
+          `https://api.themoviedb.org/3/movie/${id}?api_key=${APIKey}`
+        );
+        setMovie(res.data);
+      } catch (error) {
+        setError("Failed fetch movie details");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchMovieDetails();
+  }, [id]);
+
+  if (loading) {
+    return <h2>Please wait...</h2>;
+  }
+  if (error) {
+    return { error };
+  }
+
+  if (!movie) {
+    return <h4>Movie cannot find!</h4>;
   }
 
   return (
     <div>
       <div>
         <div>
-          {/* <img src={`https://image.tmdb.org/t/p/w500${selectedMovie.poster_path}`} /> */}
+          <img
+            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+            alt={movie.title}
+          />
         </div>
-        <div>
-          <h3>{selectedMovie.title}</h3>
-          <p>User score:{selectedMovie.vote_average}</p>
-          <h4>Overview</h4>
-          <p>{selectedMovie.overview}</p>
-          <h4>Genres</h4>
-          <p>{selectedMovie.genre_ids[id]}</p>
-        </div>
+
+        <h1>{movie.title}</h1>
+        <p>User score:{Math.round(movie.vote_average * 10)}%</p>
+        <h2>Overview</h2>
+        <p>{movie.overview}</p>
+        <h2>Genres</h2>
+        <p>{movie.genres.map((genre) => genre.name).join(",")}</p>
+        <h3>Additional İnformation</h3>
+        <ul>
+          <li>
+            <Link to="cast">Cast</Link>
+          </li>
+          <li>
+            <Link to="reviews">Reviews</Link>
+          </li>
+        </ul>
+        <Outlet />
       </div>
     </div>
   );

@@ -56,6 +56,7 @@ const MoviesPage = () => {
         onChange={handleChange}
       />
       <MovieList movies={movie} />
+     
     </div>
   );
 };

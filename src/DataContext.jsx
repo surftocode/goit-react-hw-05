@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState } from "react";
 const DataContext = createContext();
 const DataProvider = ({ children }) => {
   const [movie, setMovie] = useState([]);
-  const [isLoading, setİsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [search,setSearch]=useState("");
   const deger = {
@@ -10,7 +10,7 @@ const DataProvider = ({ children }) => {
     isLoading,
     error,
     setMovie,
-    setİsLoading,
+    setIsLoading,
     setError,
     search,
     setSearch
