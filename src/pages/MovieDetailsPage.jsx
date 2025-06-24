@@ -4,7 +4,8 @@ import { useData } from "../DataContext";
 import { useParams, Link, Outlet, useLocation } from "react-router-dom";
 import axios from "axios";
 
-const API_TOKEN= "Bearer 0f552bbb3a7946c71382d336324ac39a "
+
+const APIKey= "0f552bbb3a7946c71382d336324ac39a";
 
 const MovieDetailsPage = () => {
   const { movieId } = useParams();
@@ -22,7 +23,8 @@ const MovieDetailsPage = () => {
       try {
         setIsLoading(true);
         const res = await axios.get(
-          `https://api.themoviedb.org/3/movie/${movieId}api_key=${API_TOKEN}`
+          `https://api.themoviedb.org/3/movie/${movieId}?api_key=${APIKey}`
+          
         );
         setMovie(res.data);
       } catch (error) {
@@ -39,7 +41,8 @@ const MovieDetailsPage = () => {
     return <h2>Please wait...</h2>;
   }
   if (error) {
-    return <h5>{error}: hata oluştu.</h5>;
+  
+    // return <h5>{error}: hata oluştu.</h5>;
   }
 
   if (!movie) {
