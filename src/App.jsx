@@ -15,16 +15,18 @@ import { useData } from "./DataContext";
 const HomePage = lazy(() => import("./pages/HomePage"));
 const MoviesPage = lazy(() => import("./pages/MoviesPage"));
 const MovieDetailsPage = lazy(() => import("./pages/MovieDetailsPage"));
-// const MovieCast = lazy(() => import("../components/MovieCast"));
+const MovieCast = lazy(() => import("./components/MovieCast"));
 const MovieReviews = lazy(() => import("./components/MovieReviews"));
 const App = () => {
-  const { movie, isLoading, setMovie, setChange } = useData();
+  const { movie, isLoading, setMovie, setChange, setIsLoading } = useData();
   const handleSearch = async (query) => {
     try {
       const movieResults = await fetchMovies(query);
       setMovie(movieResults);
     } catch (err) {
       console.log("hata mesajı:", err);
+    } finally {
+      setIsLoading(false);
     }
   };
   if (isLoading) {
@@ -66,23 +68,23 @@ const App = () => {
           }
         ></Route>
         <Route
-          path="/movieList/:id"
+          path="/movieList/:movieId"
           element={
             <Suspense fallback={<div>Loading..</div>}>
               <MovieDetailsPage />
             </Suspense>
           }
         >
-          {/* <Route
-            path="cast"
+          <Route
+            path="/movieList/:movieId/cast"
             element={
               <Suspense fallback={<div>Loading..</div>}>
                 <MovieCast />
               </Suspense>
             }
-          ></Route> */}
+          ></Route>
           <Route
-            path="reviews"
+            path="/movieList/:movieId/reviews"
             element={
               <Suspense fallback={<div>Loading..</div>}>
                 <MovieReviews />

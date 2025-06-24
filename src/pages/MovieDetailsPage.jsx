@@ -1,18 +1,18 @@
 import React from "react";
-import { useContext, useEffect,lazy, Suspense} from "react";
+import { useContext, useEffect, lazy, Suspense } from "react";
 import { useData } from "../DataContext";
 import { useParams, Link, Outlet, useLocation } from "react-router-dom";
 import axios from "axios";
 
-const APIKey = "0f552bbb3a7946c71382d336324ac39a";
-
+const API_TOKEN= "Bearer 0f552bbb3a7946c71382d336324ac39a "
 
 const MovieDetailsPage = () => {
-  const { id } = useParams();
-  const { movie, setMovie, loading, setLoading, error, setError } = useData();
-  console.log(id);
+  const { movieId } = useParams();
+  const { movie, setMovie, isLoading, setIsLoading, error } =
+    useData();
+  console.log(movieId);
 
-  // const selectedMovie = movie.find((m) => m.id == Number(id));
+  // const selectedMovie = movie.find((m) => m.movieId= Number(movieId;
   // console.log(selectedMovie);
   // if(!selectedMovie){
   //   return <p>Loading movies...</p>
@@ -20,25 +20,26 @@ const MovieDetailsPage = () => {
   useEffect(() => {
     const fetchMovieDetails = async () => {
       try {
-        setLoading(true);
+        setIsLoading(true);
         const res = await axios.get(
-          `https://api.themoviedb.org/3/movie/${id}?api_key=${APIKey}`
+          `https://api.themoviedb.org/3/movie/${movieId}api_key=${API_TOKEN}`
         );
         setMovie(res.data);
       } catch (error) {
-        setError("Failed fetch movie details");
+        // setError("Failed fetch movie details");
+        console.error(error);
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     };
     fetchMovieDetails();
-  }, [id]);
+  }, [movieId]);
 
-  if (loading) {
+  if (isLoading) {
     return <h2>Please wait...</h2>;
   }
   if (error) {
-    return { error };
+    return <h5>{error}: hata oluştu.</h5>;
   }
 
   if (!movie) {
@@ -60,7 +61,10 @@ const MovieDetailsPage = () => {
         <h2>Overview</h2>
         <p>{movie.overview}</p>
         <h2>Genres</h2>
-        <p>{movie.genres.map((genre) => genre.name).join(",")}</p>
+        {movie.genres && (
+          <p>{movie.genres.map((genre) => genre.name).join(",")}</p>
+        )}
+
         <h3>Additional İnformation</h3>
         <ul>
           <li>

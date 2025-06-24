@@ -7,7 +7,9 @@ import Head from "../components/Head";
 
 const MoviesPage = () => {
   const MovieList = lazy(() => import("../components/MovieList"));
-  const APIKey = "0f552bbb3a7946c71382d336324ac39a";
+  
+  const API_TOKEN= "Bearer 0f552bbb3a7946c71382d336324ac39a "
+  
   const {
     movie,
     setMovie,
@@ -26,9 +28,10 @@ const MoviesPage = () => {
       const { data } = await axios.get(
         "https://api.themoviedb.org/3/search/movie",
         {
-          params: {
-            api_key: APIKey,
-            query: search,
+          headers: {
+            Authorization: API_TOKEN
+
+            
           },
         }
       );
@@ -41,7 +44,7 @@ const MoviesPage = () => {
     }
   };
   const handleChange = (e) => {
-    setSearch(e);
+    setSearch(e.target.value);
   };
 
   console.log(movie);
