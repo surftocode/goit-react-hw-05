@@ -7,7 +7,6 @@ import { lazy, Suspense } from "react";
 import React from "react";
 import css from "./App.module.css";
 
-
 import NotFoundPage from "./pages/NotFoundPage";
 
 import { fetchMovies } from "./components/FilmAPI";
@@ -16,8 +15,8 @@ import { useData } from "./DataContext";
 const HomePage = lazy(() => import("./pages/HomePage"));
 const MoviesPage = lazy(() => import("./pages/MoviesPage"));
 const MovieDetailsPage = lazy(() => import("./pages/MovieDetailsPage"));
-const MovieCast = lazy(() => import("../components/MovieCast"));
-const MovieReviews = lazy(() => import("../components/MovieReviews"));
+// const MovieCast = lazy(() => import("../components/MovieCast"));
+const MovieReviews = lazy(() => import("./components/MovieReviews"));
 const App = () => {
   const { movie, isLoading, setMovie, setChange } = useData();
   const handleSearch = async (query) => {
@@ -53,7 +52,7 @@ const App = () => {
         <Route
           index
           element={
-            <Suspense fallback={"Loading.."}>
+            <Suspense fallback={<div>Loading..</div>}>
               <HomePage />
             </Suspense>
           }
@@ -61,7 +60,7 @@ const App = () => {
         <Route
           path="/movies"
           element={
-            <Suspense fallback={"Loading..."}>
+            <Suspense fallback={<div>Loading..</div>}>
               <MoviesPage />
             </Suspense>
           }
@@ -69,23 +68,23 @@ const App = () => {
         <Route
           path="/movieList/:id"
           element={
-            <Suspense fallback={"Loading..."}>
+            <Suspense fallback={<div>Loading..</div>}>
               <MovieDetailsPage />
             </Suspense>
           }
         >
-          <Route
+          {/* <Route
             path="cast"
             element={
-              <Suspense>
+              <Suspense fallback={<div>Loading..</div>}>
                 <MovieCast />
               </Suspense>
             }
-          ></Route>
+          ></Route> */}
           <Route
             path="reviews"
             element={
-              <Suspense>
+              <Suspense fallback={<div>Loading..</div>}>
                 <MovieReviews />
               </Suspense>
             }

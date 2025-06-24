@@ -1,10 +1,12 @@
 import React from "react";
-import MovieList from "../components/MovieList";
+import { lazy, Suspense } from "react";
+// import MovieList from "../components/MovieList";
 import { useData } from "../DataContext";
 import axios from "axios";
 import Head from "../components/Head";
 
 const MoviesPage = () => {
+  const MovieList = lazy(() => import("../components/MovieList"));
   const APIKey = "0f552bbb3a7946c71382d336324ac39a";
   const {
     movie,
@@ -50,13 +52,17 @@ const MoviesPage = () => {
   return (
     <div>
      
-      <Head
+        <Head
         searchValue={search}
         onClick={handleSearch}
         onChange={handleChange}
       />
-      <MovieList movies={movie} />
      
+      <Suspense fallback={<div>Loading..</div>}>
+        <MovieList movies={movie} />
+      </Suspense>
+      
+      
     </div>
   );
 };
