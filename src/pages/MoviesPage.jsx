@@ -7,8 +7,10 @@ import Head from "../components/Head";
 
 const MoviesPage = () => {
   const MovieList = lazy(() => import("../components/MovieList"));
-const APIKey= "0f552bbb3a7946c71382d336324ac39a";
-  const API_TOKEN = "Bearer 0f552bbb3a7946c71382d336324ac39a ";
+  const APIKey = "0f552bbb3a7946c71382d336324ac39a";
+  if (error) {
+    <p>Movies could not uploaded!</p>;
+  }
 
   const {
     movie,
@@ -36,7 +38,7 @@ const APIKey= "0f552bbb3a7946c71382d336324ac39a";
       );
       setMovie(data.results);
     } catch (error) {
-      console.log("Hata Mesajı", error);
+      setError(error);
       setError(true);
     } finally {
       setIsLoading(false);
@@ -46,7 +48,6 @@ const APIKey= "0f552bbb3a7946c71382d336324ac39a";
     setSearch(e);
   };
 
-  console.log(movie);
   if (isLoading) {
     return <h2>Loading...</h2>;
   }

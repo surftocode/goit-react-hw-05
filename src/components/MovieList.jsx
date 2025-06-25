@@ -3,16 +3,15 @@ import css from "./MovieList.module.css";
 import { Link } from "react-router-dom";
 import MovieDetailsPage from "../pages/MovieDetailsPage";
 
-
 const MovieList = ({ movies }) => {
   if (!Array.isArray(movies)) {
     return <p>we couldn't upload movies</p>;
   }
-  console.log(movies);
+
   return (
     <div>
       <ul className={css.movielist}>
-        {movies.map((movie,index) => {
+        {movies.map((movie, index) => {
           return (
             <li key={index}>
               <Link to={`/movieList/${movie.id}`}>
@@ -28,7 +27,6 @@ const MovieList = ({ movies }) => {
   );
 };
 
-<MovieDetailsPage/>
-
+<MovieDetailsPage />;
 
 export default MovieList;

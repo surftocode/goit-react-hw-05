@@ -13,7 +13,7 @@ const HomePage = () => {
     const trendingMovies = async () => {
       setIsLoading(true);
       try {
-        const {data} = await axios.get(
+        const { data } = await axios.get(
           "https://api.themoviedb.org/3/trending/movie/day",
           {
             params: {
@@ -21,7 +21,7 @@ const HomePage = () => {
             },
           }
         );
-       
+
         setMovie(data.results);
       } catch (error) {
         setError("Trend filmler yüklenemedi.");

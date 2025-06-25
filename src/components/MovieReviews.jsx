@@ -7,7 +7,10 @@ const MovieReviews = () => {
   const Api_Token =
     "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwZjU1MmJiYjNhNzk0NmM3MTM4MmQzMzYzMjRhYzM5YSIsIm5iZiI6MTc0MzkzMzUxMi42MTY5OTk5LCJzdWIiOiI2N2YyNTA0ODBmMjBmOWM0NWNhZDQ2MGYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.e_6f3rULWsfEpLZTx14_vgGcHG03xA-zVwyUfM3rtyU";
   const { movieId } = useParams();
-  const [reviews, setReviews] = useState([]);
+  const [reviews, setReviews,setError,error] = useState([]);
+  if(error){
+    return <p>Reviews cannot display!</p>
+  }
   useEffect(() => {
     const fetchReviews = async () => {
       try {
@@ -22,7 +25,7 @@ const MovieReviews = () => {
         );
         setReviews(res.data.results);
       } catch (error) {
-        console.log("Reviews couldn't uploaded:", error);
+       setError(error)
       }
     };
     fetchReviews();

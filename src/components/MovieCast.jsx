@@ -9,7 +9,7 @@ const MovieCast = () => {
     "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwZjU1MmJiYjNhNzk0NmM3MTM4MmQzMzYzMjRhYzM5YSIsIm5iZiI6MTc0MzkzMzUxMi42MTY5OTk5LCJzdWIiOiI2N2YyNTA0ODBmMjBmOWM0NWNhZDQ2MGYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.e_6f3rULWsfEpLZTx14_vgGcHG03xA-zVwyUfM3rtyU";
 
   const { movieId } = useParams();
-  const [cast, setCast] = useState([]);
+  const [cast, setCast, setError] = useState([]);
 
   useEffect(() => {
     const fetchCast = async () => {
@@ -25,7 +25,7 @@ const MovieCast = () => {
         );
         setCast(response.data.cast);
       } catch (error) {
-        console.log("Cast bulunamadı:", error);
+        setError(error);
       }
     };
     fetchCast();

@@ -18,13 +18,14 @@ const MovieDetailsPage = lazy(() => import("./pages/MovieDetailsPage"));
 const MovieCast = lazy(() => import("./components/MovieCast"));
 const MovieReviews = lazy(() => import("./components/MovieReviews"));
 const App = () => {
-  const { movie, isLoading, setMovie, setChange, setIsLoading } = useData();
+  const { movie, isLoading, setMovie, setChange, setIsLoading, setError } =
+    useData();
   const handleSearch = async (query) => {
     try {
       const movieResults = await fetchMovies(query);
       setMovie(movieResults);
     } catch (err) {
-      console.log("hata mesajı:", err);
+      setError(error);
     } finally {
       setIsLoading(false);
     }
