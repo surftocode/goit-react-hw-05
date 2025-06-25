@@ -1,17 +1,18 @@
 import React from "react";
-import { useContext, useEffect, lazy, Suspense } from "react";
+import { useContext, useEffect} from "react";
 import { useData } from "../DataContext";
-import { useParams, Link, Outlet, useLocation } from "react-router-dom";
+import { useParams, Link, Outlet } from "react-router-dom";
 import axios from "axios";
 
+const APIKey = "0f552bbb3a7946c71382d336324ac39a";
 
-const APIKey= "0f552bbb3a7946c71382d336324ac39a";
 
 const MovieDetailsPage = () => {
   const { movieId } = useParams();
-  const { movie, setMovie, isLoading, setIsLoading, error } =
-    useData();
+  const { movie, setMovie, isLoading, setIsLoading, error } = useData();
   console.log(movieId);
+  const MovieCast = lazy(() => import("./components/MovieCast"));
+
 
   // const selectedMovie = movie.find((m) => m.movieId= Number(movieId;
   // console.log(selectedMovie);
@@ -24,7 +25,6 @@ const MovieDetailsPage = () => {
         setIsLoading(true);
         const res = await axios.get(
           `https://api.themoviedb.org/3/movie/${movieId}?api_key=${APIKey}`
-          
         );
         setMovie(res.data);
       } catch (error) {
@@ -41,7 +41,6 @@ const MovieDetailsPage = () => {
     return <h2>Please wait...</h2>;
   }
   if (error) {
-  
     // return <h5>{error}: hata oluştu.</h5>;
   }
 
