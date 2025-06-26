@@ -1,5 +1,5 @@
 import React from "react";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { useData } from "../DataContext";
 import { useParams, Link, Outlet } from "react-router-dom";
 import axios from "axios";
@@ -31,6 +31,7 @@ const MovieDetailsPage = () => {
         setMovie(res.data);
       } catch (error) {
         setError(error);
+        console.error(error);
       } finally {
         setIsLoading(false);
       }
@@ -65,7 +66,7 @@ const MovieDetailsPage = () => {
           <p>{movie.genres.map((genre) => genre.name).join(",")}</p>
         )}
 
-        <h3>Additional İnformation</h3>
+        <h3>Additional Information</h3>
         <ul>
           <li>
             <Link to="cast">Cast</Link>

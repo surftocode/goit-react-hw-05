@@ -8,9 +8,6 @@ import Head from "../components/Head";
 const MoviesPage = () => {
   const MovieList = lazy(() => import("../components/MovieList"));
   const APIKey = "0f552bbb3a7946c71382d336324ac39a";
-  if (error) {
-    <p>Movies could not uploaded!</p>;
-  }
 
   const {
     movie,
@@ -20,6 +17,7 @@ const MoviesPage = () => {
     setIsLoading,
     search,
     setSearch,
+    error,
   } = useData();
 
   const handleSearch = async () => {
@@ -50,6 +48,9 @@ const MoviesPage = () => {
 
   if (isLoading) {
     return <h2>Loading...</h2>;
+  }
+  if (error) {
+    return <p>Movies could not uploaded!</p>;
   }
 
   return (
