@@ -8,9 +8,6 @@ const Head = ({ onChange, onClick, searchValue }) => {
     onClick();
   };
 
-  console.log("onchange", typeof onChange);
-  console.log("onClick", typeof onClick);
-  console.log("searchValue", typeof searchValue);
   return (
     <div>
       <form onSubmit={handleSubmit} className={css.formElements}>
